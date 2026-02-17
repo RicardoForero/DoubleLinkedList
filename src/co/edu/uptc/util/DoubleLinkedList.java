@@ -24,8 +24,7 @@ public class DoubleLinkedList<T> implements java.util.List{
 
     @Override
     public int size() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'size'");
+        return size;
     }
 
     @Override
