@@ -64,9 +64,20 @@ public class DoubleLinkedList<T> implements java.util.List{
     }
 
     @Override
-    public Object get(int index) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'get'");
+    public T get(int index) {
+        if(index<0||index>=size()){
+            throw new IndexOutOfBoundsException();
+        }
+        Node<T>aux=head;
+        int current=0;
+        while(aux!=null){
+            if(current==index){
+                return aux.getData();
+            }
+            aux=aux.getNext();
+            current++;
+        }
+        return null;
     }
 
     @Override
