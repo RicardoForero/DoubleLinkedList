@@ -64,7 +64,7 @@ public class DoubleLinkedList<T> implements java.util.List{
     }
 
     @Override
-    public T get(int index) {
+    public Object get(int index) {
         if(index<0||index>=size()){
             throw new IndexOutOfBoundsException();
         }
