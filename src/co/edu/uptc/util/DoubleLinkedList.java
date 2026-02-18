@@ -5,12 +5,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-public class DoubleLinkedList<T> implements java.util.List{
+public class DoubleLinkedList<T> implements java.util.List {
     private Node<T> head;
     private Node<T> tail;
     private int size;
 
-    public DoubleLinkedList(){
+    public DoubleLinkedList() {
         size = 0;
         this.head = null;
         this.tail = null;
@@ -36,8 +36,20 @@ public class DoubleLinkedList<T> implements java.util.List{
 
     @Override
     public boolean contains(Object o) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'contains'");
+        if (o.equals(null)) {
+            throw new NullPointerException("La lista no permite datos nulos");
+        }
+        if (o != null && !(o.getClass().equals(head.getData().getClass()))) {
+            throw new ClassCastException("Tipo de dato incorrecto");
+        }
+        Node<T> auxNode = head;
+        for (int i = 0; i < size; i++) {
+            if (auxNode.getData().equals(o)) {
+                return true;
+            }
+            auxNode = auxNode.getNext();
+        }
+        return false;
     }
 
     @Override
@@ -57,6 +69,7 @@ public class DoubleLinkedList<T> implements java.util.List{
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'remove'");
     }
+
     @Override
     public void clear() {
         // TODO Auto-generated method stub
