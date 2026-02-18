@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-public class DoubleLinkedList<T> implements java.util.List {
+public class DoubleLinkedList<T> implements List<T> {
     private Node<T> head;
     private Node<T> tail;
     private int size;
