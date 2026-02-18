@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-public class DoubleLinkedList<T> implements java.util.List{
+public class DoubleLinkedList<T> implements List<T>{
     private Node<T> head;
     private Node<T> tail;
     private int size;
@@ -76,7 +76,7 @@ public class DoubleLinkedList<T> implements java.util.List{
     }
 
     @Override
-    public Object get(int index) {
+    public T get(int index) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'get'");
     }
@@ -94,7 +94,7 @@ public class DoubleLinkedList<T> implements java.util.List{
     }
 
     @Override
-    public Object remove(int index) {
+    public T remove(int index) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'remove'");
     }
@@ -112,19 +112,19 @@ public class DoubleLinkedList<T> implements java.util.List{
     }
 
     @Override
-    public ListIterator<Object> listIterator() {
+    public ListIterator<T> listIterator() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'listIterator'");
     }
 
     @Override
-    public ListIterator<Object> listIterator(int index) {
+    public ListIterator<T> listIterator(int index) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'listIterator'");
     }
 
     @Override
-    public List<Object> subList(int fromIndex, int toIndex) {
+    public List<T> subList(int fromIndex, int toIndex) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'subList'");
     }
