@@ -30,7 +30,9 @@ public class DoubleLinkedList<T> implements java.util.List{
 
     @Override
     public boolean isEmpty() {
-        // TODO Auto-generated method stub
+        if(size==0) {
+            return true;
+        }
         throw new UnsupportedOperationException("Unimplemented method 'isEmpty'");
     }
 
