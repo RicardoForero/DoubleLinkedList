@@ -69,8 +69,9 @@ public class DoubleLinkedList<T> implements List<T>{
     }
     @Override
     public void clear() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'clear'");
+        head = null;
+        tail = null;
+        size = 0;
     }
 
     @Override
