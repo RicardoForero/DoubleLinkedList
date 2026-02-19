@@ -159,7 +159,17 @@ public class DoubleLinkedList<T> implements List<T>{
 
     @Override
     public boolean retainAll(Collection c) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'retainAll'");
+        boolean hasChanged = false;
+        Iterator<T> it = this.iterator();
+
+        while (it.hasNext()) {
+            T element = it.next();
+            if (!c.contains(element)) {
+                it.remove();
+                hasChanged = true;
+            }
+        }
+
+        return hasChanged;
     }
 }
