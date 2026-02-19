@@ -31,8 +31,7 @@ public class DoubleLinkedList<T> implements List<T>{
 
     @Override
     public boolean isEmpty() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'isEmpty'");
+      return size == 0;
     }
 
     @Override
