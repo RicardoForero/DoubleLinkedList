@@ -83,8 +83,34 @@ public class DoubleLinkedList<T> implements java.util.List{
 
     @Override
     public Object remove(int index) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'remove'");
+
+        Node <T> aux = head;
+        int i = 0;
+
+        if(index < 0 || index >= size){
+            throw new IndexOutOfBoundsException();
+        }
+        while (i < index ) {
+            i++;
+            aux = aux.getNext();
+        }
+        if (aux == head) {
+            if (aux.getNext()==null) {
+                head = null;
+            }else{
+                head = head.getNext();
+                head.setPrevius(null);
+            }
+        }
+        if(aux.getNext()!=null){
+            aux.getNext().setPrevius(aux.getPrevius());
+        }
+        if (aux != head) {
+            aux.getPrevius().setNext(aux.getNext());
+        }
+
+        size --;
+        return aux.getData();
     }
 
     @Override
