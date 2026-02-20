@@ -26,18 +26,11 @@ public class DoubleLinkedList<T> implements List<T>{
 
       @Override
     public int size() {
-        Node<T> aux=head;
-        int count=0;
-        while (aux!=null) {
-            if (count>Integer.MAX_VALUE) {
+            if (size==Integer.MAX_VALUE) {
                 return Integer.MAX_VALUE;
             }
-            count++;
-            aux=aux.getNext();
-        }
-        this.size=count;
-        return count;
-    }
+        return size;
+    }   
 
     @Override
     public boolean isEmpty() {
@@ -57,7 +50,8 @@ public class DoubleLinkedList<T> implements List<T>{
     }
 
     @Override
-    public boolean add(Object e) {
+    public boolean add(T e) {
+
         Node<T> newNode = new Node(e);
         if (head!=null) {
             tail.setNext(newNode);
