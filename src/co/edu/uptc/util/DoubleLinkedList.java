@@ -161,17 +161,14 @@ public class DoubleLinkedList<T> implements List<T>{
                     return null;
                 }
                 Node<T> temp = head;
-<<<<<<< HEAD
                 for (int i = 0; i < index; i++) {
                     temp = temp.getNext();
                 }
-=======
 
                 for (int i = 0; i < index; i++) {
                     temp = temp.getNext();
                 }
 
->>>>>>> 59025666a561a69ce31ecd16306645e009534659
                 return temp;
             }
             @Override
@@ -188,10 +185,6 @@ public class DoubleLinkedList<T> implements List<T>{
                 cursorIndex++;
                 return value;
             }
-<<<<<<< HEAD
-=======
-
->>>>>>> 59025666a561a69ce31ecd16306645e009534659
             @Override
             public boolean hasPrevious() {
                 return cursorIndex > 0;
@@ -201,10 +194,6 @@ public class DoubleLinkedList<T> implements List<T>{
                 if (!hasPrevious()) {
                     throw new java.util.NoSuchElementException();
                 }
-<<<<<<< HEAD
-
-=======
->>>>>>> 59025666a561a69ce31ecd16306645e009534659
                 if (cursor == null) {
                     cursor = tail;
                 } else {
@@ -215,42 +204,22 @@ public class DoubleLinkedList<T> implements List<T>{
 
                 return cursor.getData();
             }
-<<<<<<< HEAD
-=======
-
->>>>>>> 59025666a561a69ce31ecd16306645e009534659
             @Override
             public int nextIndex() {
                 return cursorIndex;
             }
-<<<<<<< HEAD
-=======
-
->>>>>>> 59025666a561a69ce31ecd16306645e009534659
             @Override
             public int previousIndex() {
                 return cursorIndex - 1;
             }
-<<<<<<< HEAD
-=======
-
->>>>>>> 59025666a561a69ce31ecd16306645e009534659
             @Override
             public void remove() {
                 throw new UnsupportedOperationException();
             }
-<<<<<<< HEAD
-=======
-
->>>>>>> 59025666a561a69ce31ecd16306645e009534659
             @Override
             public void set(T e) {
                 throw new UnsupportedOperationException();
             }
-<<<<<<< HEAD
-=======
-
->>>>>>> 59025666a561a69ce31ecd16306645e009534659
             @Override
             public void add(T e) {
                 throw new UnsupportedOperationException();
