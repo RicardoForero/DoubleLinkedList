@@ -65,9 +65,28 @@ public class DoubleLinkedList<T> implements List<T>{
 
     @Override
     public boolean remove(Object o) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'remove'");
+        Node<T> previous = head;
+        Node<T> next = head.getNext();
+        if (head == null) {
+            return false;
+        }
+        if (head.getData().equals(o)) {
+            head = head.getNext();
+            size--;
+            return true;
+        }
+        while (next != null) {
+        if (next.getData().equals(o)) {
+            previous.setNext(next.getNext());
+            size--;
+            return true;
+        }
+        previous = next;
+        next = next.getNext();
     }
+        return false;
+    }
+
     @Override
     public void clear() {
         head = null;
