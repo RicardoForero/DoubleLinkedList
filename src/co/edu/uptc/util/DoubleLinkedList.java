@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 public class DoubleLinkedList<T> implements List<T>{
     private Node<T> head;
@@ -18,7 +19,7 @@ public class DoubleLinkedList<T> implements List<T>{
     }
 
     @Override
-    public Iterator iterator() {
+    public Iterator<T> iterator() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'iterator'");
     }
@@ -31,8 +32,7 @@ public class DoubleLinkedList<T> implements List<T>{
 
     @Override
     public boolean isEmpty() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'isEmpty'");
+      return size == 0;
     }
 
     @Override
@@ -48,7 +48,7 @@ public class DoubleLinkedList<T> implements List<T>{
     }
 
     @Override
-    public boolean add(Object e) {
+    public boolean add(T e) {
 
         Node<T> newNode = new Node(e);
         if (head!=null) {
@@ -70,24 +70,36 @@ public class DoubleLinkedList<T> implements List<T>{
     }
     @Override
     public void clear() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'clear'");
+        head = null;
+        tail = null;
+        size = 0;
     }
 
     @Override
     public T get(int index) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'get'");
+       if(index<0||index>=size()){
+           throw new  IndexOutOfBoundsException();
+       }
+       int current=0;
+       Node <T> aux=head;
+       while(aux!=null){
+           if(current==index){
+               return aux.getData();
+           }
+           aux=aux.getNext();
+           current++;
+       }
+       return null;
     }
 
     @Override
-    public Object set(int index, Object element) {
+    public T set(int index, T element) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'set'");
     }
 
     @Override
-    public void add(int index, Object element) {
+    public void add(int index, T element) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'add'");
     }
@@ -106,8 +118,19 @@ public class DoubleLinkedList<T> implements List<T>{
 
     @Override
     public int lastIndexOf(Object o) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'lastIndexOf'");
+        int output = size; 
+        boolean found = false;
+        
+        while (output > 0 && !found) {
+            output--;
+            if (Objects.equals(o, get(output))) {
+                found =  true;
+            }
+        }
+
+        return found ? output : -1; 
+
+
     }
 
     @Override
@@ -254,38 +277,46 @@ public class DoubleLinkedList<T> implements List<T>{
     }
 
     @Override
-    public Object[] toArray(Object[] a) {
+    public <T> T[] toArray(T[] a) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'toArray'");
     }
 
     @Override
-    public boolean containsAll(Collection c) {
+    public boolean containsAll(Collection<?> c) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'containsAll'");
     }
 
     @Override
-    public boolean addAll(Collection c) {
+    public boolean addAll(Collection<? extends T> c) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'addAll'");
     }
 
     @Override
-    public boolean addAll(int index, Collection c) {
+    public boolean addAll(int index, Collection<? extends T> c) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'addAll'");
     }
 
     @Override
-    public boolean removeAll(Collection c) {
+    public boolean removeAll(Collection<?> c) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'removeAll'");
     }
 
     @Override
-    public boolean retainAll(Collection c) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'retainAll'");
+    public boolean retainAll(Collection<?> c) {
+        boolean hasChanged = false;
+        Iterator<T> it = this.iterator();
+        while (it.hasNext()) {
+            T element = it.next();
+            if (!c.contains(element)) {
+                it.remove();
+                hasChanged = true;
+            }
+        }
+        return hasChanged;
     }
 }
