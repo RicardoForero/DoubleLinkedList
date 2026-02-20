@@ -7,12 +7,12 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Objects;
 
-public class DoubleLinkedList<T> implements List<T>{
+public class DoubleLinkedList<T> implements List<T> {
     private Node<T> head;
     private Node<T> tail;
     private int size;
 
-    public DoubleLinkedList(){
+    public DoubleLinkedList() {
         size = 0;
         this.head = null;
         this.tail = null;
@@ -32,13 +32,25 @@ public class DoubleLinkedList<T> implements List<T>{
 
     @Override
     public boolean isEmpty() {
-      return size == 0;
+        return size == 0;
     }
 
     @Override
     public boolean contains(Object o) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'contains'");
+        if (o.equals(null)) {
+            throw new NullPointerException("La lista no permite datos nulos");
+        }
+        if (o != null && !(o.getClass().equals(head.getData().getClass()))) {
+            throw new ClassCastException("Tipo de dato incorrecto");
+        }
+        Node<T> auxNode = head;
+        for (int i = 0; i < size; i++) {
+            if (auxNode.getData().equals(o)) {
+                return true;
+            }
+            auxNode = auxNode.getNext();
+        }
+        return false;
     }
 
     @Override
@@ -51,23 +63,24 @@ public class DoubleLinkedList<T> implements List<T>{
     public boolean add(T e) {
 
         Node<T> newNode = new Node(e);
-        if (head!=null) {
+        if (head != null) {
             tail.setNext(newNode);
             newNode.setPrevius(tail);
             tail = newNode;
-        } else{
+        } else {
             head = newNode;
             tail = newNode;
         }
         size++;
         return tail.equals(newNode);
     }
-    
+
     @Override
     public boolean remove(Object o) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'remove'");
     }
+
     @Override
     public void clear() {
         head = null;
@@ -77,34 +90,36 @@ public class DoubleLinkedList<T> implements List<T>{
 
     @Override
     public T get(int index) {
-       if(index<0||index>=size()){
-           throw new  IndexOutOfBoundsException();
-       }
-       int current=0;
-       Node <T> aux=head;
-       while(aux!=null){
-           if(current==index){
-               return aux.getData();
-           }
-           aux=aux.getNext();
-           current++;
-       }
-       return null;
+        if (index < 0 || index >= size()) {
+            throw new IndexOutOfBoundsException();
+        }
+        int current = 0;
+        Node<T> aux = head;
+        while (aux != null) {
+            if (current == index) {
+                return aux.getData();
+            }
+            aux = aux.getNext();
+            current++;
+        }
+        return null;
     }
 
     @Override
     public T set(int index, T element) {
-        int counter=0; 
-        T oldData= get(index);
-        Node<T> auxNode = head; 
-         
-        if((index < 0 || index >= size())){ 
-            throw new IndexOutOfBoundsException(); 
-        } while (counter<index) { 
-            auxNode= auxNode.getNext(); counter++; 
-        } 
-        auxNode.setData(element); 
-        return oldData;   
+        int counter = 0;
+        T oldData = get(index);
+        Node<T> auxNode = head;
+
+        if ((index < 0 || index >= size())) {
+            throw new IndexOutOfBoundsException();
+        }
+        while (counter < index) {
+            auxNode = auxNode.getNext();
+            counter++;
+        }
+        auxNode.setData(element);
+        return oldData;
     }
 
     @Override
@@ -127,18 +142,17 @@ public class DoubleLinkedList<T> implements List<T>{
 
     @Override
     public int lastIndexOf(Object o) {
-        int output = size; 
+        int output = size;
         boolean found = false;
-        
+
         while (output > 0 && !found) {
             output--;
             if (Objects.equals(o, get(output))) {
-                found =  true;
+                found = true;
             }
         }
 
-        return found ? output : -1; 
-
+        return found ? output : -1;
 
     }
 
@@ -156,6 +170,7 @@ public class DoubleLinkedList<T> implements List<T>{
         return new ListIterator<T>() {
             private Node<T> cursor = inicializarCursor();
             private int cursorIndex = index;
+
             private Node<T> inicializarCursor() {
                 if (index == size) {
                     return null;
@@ -171,10 +186,12 @@ public class DoubleLinkedList<T> implements List<T>{
 
                 return temp;
             }
+
             @Override
             public boolean hasNext() {
                 return cursor != null;
             }
+
             @Override
             public T next() {
                 if (!hasNext()) {
@@ -185,10 +202,12 @@ public class DoubleLinkedList<T> implements List<T>{
                 cursorIndex++;
                 return value;
             }
+
             @Override
             public boolean hasPrevious() {
                 return cursorIndex > 0;
             }
+
             @Override
             public T previous() {
                 if (!hasPrevious()) {
@@ -204,22 +223,27 @@ public class DoubleLinkedList<T> implements List<T>{
 
                 return cursor.getData();
             }
+
             @Override
             public int nextIndex() {
                 return cursorIndex;
             }
+
             @Override
             public int previousIndex() {
                 return cursorIndex - 1;
             }
+
             @Override
             public void remove() {
                 throw new UnsupportedOperationException();
             }
+
             @Override
             public void set(T e) {
                 throw new UnsupportedOperationException();
             }
+
             @Override
             public void add(T e) {
                 throw new UnsupportedOperationException();
@@ -238,17 +262,17 @@ public class DoubleLinkedList<T> implements List<T>{
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'toArray'");
     }
-    
+
     @Override
     public boolean containsAll(Collection<?> c) {
         if (c == null) {
             throw new NullPointerException("The specified collection is null");
         }
-        
+
         Iterator iterator = c.iterator();
         while (iterator.hasNext()) {
             Object element = iterator.next();
-            
+
             if (element == null) {
                 throw new NullPointerException("The collection contains null elements");
             }
@@ -261,7 +285,7 @@ public class DoubleLinkedList<T> implements List<T>{
                 throw new ClassCastException("The element type is not compatible with this collection.");
             }
         }
-        
+
         return true;
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'containsAll'");
@@ -270,15 +294,15 @@ public class DoubleLinkedList<T> implements List<T>{
     @Override
     public boolean addAll(Collection<? extends T> c) {
         boolean modified = false;
-        if ( c.isEmpty()) {
-            modified = false; 
-        }else{ 
-                for (T dataCollection : c) {
-                add(dataCollection); 
+        if (c.isEmpty()) {
+            modified = false;
+        } else {
+            for (T dataCollection : c) {
+                add(dataCollection);
                 modified = true;
             }
-            }
-        return modified; 
+        }
+        return modified;
     }
 
     @Override
