@@ -177,11 +177,14 @@ public class DoubleLinkedList<T> implements List<T> {
 
     @Override
     public boolean removeAll(Collection<?> c) {
+
         if (c == null) {
             throw new NullPointerException("La coleccion esta vacia");
         }
+
         Node<T> temporalNode = head;
         boolean isDeleted = false;
+        
         while (temporalNode != null) {
             Node<T> nextNode = temporalNode.getNext();
             isDeleted = exists(temporalNode, c);
