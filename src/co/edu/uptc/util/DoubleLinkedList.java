@@ -209,9 +209,56 @@ public class DoubleLinkedList<T> implements List<T>{
     }
 
     @Override
-    public boolean addAll(int index, Collection<? extends T> c) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'addAll'");
+    public boolean addAll(int index, Collection c) {
+        if (c == null)
+            throw new NullPointerException("Collection cannot be null");
+        if (index < 0 || index > size)
+            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
+        if (c.isEmpty())
+            return false;
+
+       
+        for (Object element : c) {
+            if (element == null)
+                throw new NullPointerException("Collection contains a null element");
+            try {
+                T ignored = (T) element;
+            } catch (ClassCastException e) {
+                throw new ClassCastException("Element type is incompatible with the list: " + e.getMessage());
+            }
+        }
+
+        Node<T> next = null;
+        Node<T> previous = null;
+        if (index == size) {
+            previous = tail;
+        } else {
+            next = head;
+            for (int i = 0; i < index; i++) {
+                next = next.getNext();
+            }
+            previous = next.getPrevius();
+        }
+
+        for (Object element : c) {
+            Node<T> newNode = new Node<>((T) element);
+            newNode.setPrevius(previous);
+            newNode.setNext(next);
+            if (previous == null) {
+                head = newNode;
+            } else {
+                previous.setNext(newNode);
+            }
+            if (next == null) {
+                tail = newNode;
+            } else {
+                next.setPrevius(newNode);
+            }
+            previous = newNode;
+            size++;
+        }
+
+        return true;
     }
 
     @Override
