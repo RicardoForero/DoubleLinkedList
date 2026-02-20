@@ -108,6 +108,9 @@ public class DoubleLinkedList<T> implements java.util.List{
         if (aux != head) {
             aux.getPrevius().setNext(aux.getNext());
         }
+        if(aux.getNext()== null){
+            tail = aux.getPrevius();
+        }
 
         size --;
         return aux.getData();
