@@ -150,8 +150,81 @@ public class DoubleLinkedList<T> implements List<T>{
 
     @Override
     public ListIterator<T> listIterator(int index) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'listIterator'");
+        if (index < 0 || index > size) {
+            throw new IndexOutOfBoundsException("Index: " + index);
+        }
+        return new ListIterator<T>() {
+            private Node<T> cursor = inicializarCursor();
+            private int cursorIndex = index;
+            private Node<T> inicializarCursor() {
+                if (index == size) {
+                    return null;
+                }
+                Node<T> temp = head;
+                for (int i = 0; i < index; i++) {
+                    temp = temp.getNext();
+                }
+
+                for (int i = 0; i < index; i++) {
+                    temp = temp.getNext();
+                }
+
+                return temp;
+            }
+            @Override
+            public boolean hasNext() {
+                return cursor != null;
+            }
+            @Override
+            public T next() {
+                if (!hasNext()) {
+                    throw new java.util.NoSuchElementException();
+                }
+                T value = cursor.getData();
+                cursor = cursor.getNext();
+                cursorIndex++;
+                return value;
+            }
+            @Override
+            public boolean hasPrevious() {
+                return cursorIndex > 0;
+            }
+            @Override
+            public T previous() {
+                if (!hasPrevious()) {
+                    throw new java.util.NoSuchElementException();
+                }
+                if (cursor == null) {
+                    cursor = tail;
+                } else {
+                    cursor = cursor.getPrevius();
+                }
+
+                cursorIndex--;
+
+                return cursor.getData();
+            }
+            @Override
+            public int nextIndex() {
+                return cursorIndex;
+            }
+            @Override
+            public int previousIndex() {
+                return cursorIndex - 1;
+            }
+            @Override
+            public void remove() {
+                throw new UnsupportedOperationException();
+            }
+            @Override
+            public void set(T e) {
+                throw new UnsupportedOperationException();
+            }
+            @Override
+            public void add(T e) {
+                throw new UnsupportedOperationException();
+            }
+        };
     }
 
     @Override
