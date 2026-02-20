@@ -61,7 +61,7 @@ public class DoubleLinkedList<T> implements List<T>{
         size++;
         return tail.equals(newNode);
     }
-
+    
     @Override
     public boolean remove(Object o) {
         // TODO Auto-generated method stub
@@ -132,11 +132,31 @@ public class DoubleLinkedList<T> implements List<T>{
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'toArray'");
     }
-
+    
     @Override
-    public boolean containsAll(Collection c) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'containsAll'");
+    public boolean containsAll(Collection<?> c) {
+        if (c == null) {
+            throw new NullPointerException("The specified collection is null");
+        }
+        
+        Iterator iterator = c.iterator();
+        while (iterator.hasNext()) {
+            Object element = iterator.next();
+            
+            if (element == null) {
+                throw new NullPointerException("The collection contains null elements");
+            }
+
+            try {
+                if (!contains(element)) {
+                    return false;
+                }
+            } catch (ClassCastException e) {
+                throw new ClassCastException("The element type is not compatible with this collection.");
+            }
+        }
+        
+        return true;
     }
 
     @Override
