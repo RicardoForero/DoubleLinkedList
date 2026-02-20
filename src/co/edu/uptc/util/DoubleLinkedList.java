@@ -144,11 +144,47 @@ public class DoubleLinkedList<T> implements List<T>{
         return oldData;   
     }
 
-    @Override
+@Override
     public void add(int index, T element) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'add'");
+        Node <T> newNode = new Node (element);
+        if(index< 0 || index > size){
+            throw new IndexOutOfBoundsException();  
+        }
+        
+        if(element == null){
+            throw  new NullPointerException();
+        }
+        //SI ESTA VACIO
+        if(size == 0 ){
+            head = newNode;
+            tail = newNode;
+        }
+        //INSERTAR AL PRINCIPIO
+        if(index  == 0){
+            newNode.setNext(head);
+            head.setPrevius(newNode);
+            head = newNode; 
+            
+            //INSERTAR AL FINAL
+        }else if(index ==  size){
+            newNode.setPrevius(tail);
+            tail.setNext(newNode);
+            tail = newNode;
+            //INSERTAR EN MEDIO
+        }else {
+            Node <T> currentNode = head;
+            for(int i = 0 ; i < index ; i++){
+                currentNode= currentNode.getNext();
+            }
+            Node <T> previusNode =currentNode.getPrevius();
+            previusNode.setNext(newNode);
+            newNode.setPrevius(previusNode);
+            newNode.setNext(currentNode);
+            currentNode.setPrevius(newNode);
+        }
+        size++;
     }
+
 
     @Override
     public T remove(int index) {
