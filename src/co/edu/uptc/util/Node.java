@@ -24,4 +24,7 @@ public Node<T> getPrevius() {
 public void setPrevius(Node<T> previus) {
     this.previus = previus;
 }
+public void setData(T data) {
+    this.data = data;
+}
 }
