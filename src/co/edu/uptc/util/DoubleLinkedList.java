@@ -7,12 +7,12 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Objects;
 
-public class DoubleLinkedList<T> implements List<T>{
+public class DoubleLinkedList<T> implements List<T> {
     private Node<T> head;
     private Node<T> tail;
     private int size;
 
-    public DoubleLinkedList(){
+    public DoubleLinkedList() {
         size = 0;
         this.head = null;
         this.tail = null;
@@ -32,7 +32,7 @@ public class DoubleLinkedList<T> implements List<T>{
 
     @Override
     public boolean isEmpty() {
-      return size == 0;
+        return size == 0;
     }
 
     @Override
@@ -51,11 +51,11 @@ public class DoubleLinkedList<T> implements List<T>{
     public boolean add(T e) {
 
         Node<T> newNode = new Node(e);
-        if (head!=null) {
+        if (head != null) {
             tail.setNext(newNode);
             newNode.setPrevius(tail);
             tail = newNode;
-        } else{
+        } else {
             head = newNode;
             tail = newNode;
         }
@@ -68,6 +68,7 @@ public class DoubleLinkedList<T> implements List<T>{
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'remove'");
     }
+
     @Override
     public void clear() {
         head = null;
@@ -77,19 +78,19 @@ public class DoubleLinkedList<T> implements List<T>{
 
     @Override
     public T get(int index) {
-       if(index<0||index>=size()){
-           throw new  IndexOutOfBoundsException();
-       }
-       int current=0;
-       Node <T> aux=head;
-       while(aux!=null){
-           if(current==index){
-               return aux.getData();
-           }
-           aux=aux.getNext();
-           current++;
-       }
-       return null;
+        if (index < 0 || index >= size()) {
+            throw new IndexOutOfBoundsException();
+        }
+        int current = 0;
+        Node<T> aux = head;
+        while (aux != null) {
+            if (current == index) {
+                return aux.getData();
+            }
+            aux = aux.getNext();
+            current++;
+        }
+        return null;
     }
 
     @Override
@@ -118,18 +119,17 @@ public class DoubleLinkedList<T> implements List<T>{
 
     @Override
     public int lastIndexOf(Object o) {
-        int output = size; 
+        int output = size;
         boolean found = false;
-        
+
         while (output > 0 && !found) {
             output--;
             if (Objects.equals(o, get(output))) {
-                found =  true;
+                found = true;
             }
         }
 
-        return found ? output : -1; 
-
+        return found ? output : -1;
 
     }
 
@@ -177,8 +177,47 @@ public class DoubleLinkedList<T> implements List<T>{
 
     @Override
     public boolean removeAll(Collection<?> c) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'removeAll'");
+        if (c == null) {
+            throw new NullPointerException("La coleccion esta vacia");
+        }
+        Node<T> temporalNode = head;
+        boolean isDeleted = false;
+        while (temporalNode != null) {
+            Node<T> nextNode = temporalNode.getNext();
+            isDeleted = exists(temporalNode, c);
+            temporalNode = nextNode;
+        }
+        return isDeleted;
+    }
+
+    private boolean exists(Node<T> temporalNode, Collection<?> c) {
+        boolean isDeleted = false;
+        if (c.contains(temporalNode.getData())) {
+            deleteNode(temporalNode);
+            isDeleted = true;
+        }
+        return isDeleted;
+    }
+
+    private void deleteNode(Node<T> temporalNode) {
+        if (temporalNode.getPrevius() == null) {
+            rewriteHead(temporalNode);
+        } else if (temporalNode.getNext() == null) {
+            tail = temporalNode.getPrevius();
+            tail.setNext(null);
+        } else {
+            temporalNode.getPrevius().setNext(temporalNode.getNext());
+            temporalNode.getNext().setPrevius(temporalNode.getPrevius());
+        }
+    }
+
+    private void rewriteHead(Node<T> temporalNode) {
+        head = temporalNode.getNext();
+        if (head != null) {
+            head.setPrevius(null);
+        } else {
+            tail = null;
+        }
     }
 
     @Override
