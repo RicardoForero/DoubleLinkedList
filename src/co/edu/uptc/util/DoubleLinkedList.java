@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.NoSuchElementException;
 
 public class DoubleLinkedList<T> implements List<T>{
     private Node<T> head;
@@ -111,8 +112,133 @@ public class DoubleLinkedList<T> implements List<T>{
 
     @Override
     public ListIterator<T> listIterator() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'listIterator'");
+
+        return new ListIterator<T>() {
+
+            private Node<T> current = head;
+            private Node<T> lastReturned = null;
+            private int index = 0;
+
+            @Override
+            public boolean hasNext() {
+                return current != null;
+            }
+
+            @Override
+            public T next() {
+                if (!hasNext())
+                    throw new NoSuchElementException();
+
+                lastReturned = current;
+                T data = current.getData();
+                current = current.getNext();
+                index++;
+                return data;
+            }
+
+            @Override
+            public boolean hasPrevious() {
+                if (current == null) {
+                    return tail != null;
+                }
+                return current.getPrevius() != null;
+            }
+
+            @Override
+            public T previous() {
+                if (!hasPrevious())
+                    throw new NoSuchElementException();
+
+                if (current == null) {
+                    current = tail;
+                } else {
+                    current = current.getPrevius();
+                }
+
+                lastReturned = current;
+                index--;
+                return current.getData();
+            }
+
+            @Override
+            public int nextIndex() {
+                return index;
+            }
+
+            @Override
+            public int previousIndex() {
+                return index - 1;
+            }
+
+            @Override
+            public void remove() {
+                if (lastReturned == null)
+                    throw new IllegalStateException();
+
+                Node<T> nextNode = lastReturned.getNext();
+                Node<T> prevNode = lastReturned.getPrevius();
+
+                if (prevNode != null) {
+                    prevNode.setNext(nextNode);
+                } else {
+                    head = nextNode;
+                }
+
+                if (nextNode != null) {
+                    nextNode.setPrevius(prevNode);
+                } else {
+                    tail = prevNode;
+                }
+
+                if (current == lastReturned) {
+                    current = nextNode;
+                } else {
+                    index--;
+                }
+
+                lastReturned = null;
+            }
+
+            @Override
+            public void set(T e) {
+                if (lastReturned == null)
+                    throw new IllegalStateException();
+
+                lastReturned = new Node<>(e);
+            }
+
+            @Override
+            public void add(T e) {
+
+                Node<T> newNode = new Node<>(e);
+                Node<T> prevNode;
+                Node<T> nextNode = current;
+
+                if (current != null) {
+                    prevNode = current.getPrevius();
+                } else {
+                    prevNode = tail;
+                }
+
+                newNode.setNext(nextNode);
+                newNode.setPrevius(prevNode);
+
+                if (prevNode != null) {
+                    prevNode.setNext(newNode);
+                } else {
+                    head = newNode;
+                }
+
+                if (nextNode != null) {
+                    nextNode.setPrevius(newNode);
+                } else {
+                    tail = newNode;
+                }
+
+                index++;
+                lastReturned = null;
+            }
+        };
     }
 
     @Override
